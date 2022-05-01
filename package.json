@@ -1,0 +1,157 @@
+{
+  "name": "idris2-language-support",
+  "displayName": "Idris 2 Language Support",
+  "description": "Idris 2 client for idris2-lsp",
+  "author": "Jesse Nava",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/j-nava/idris2-vscode"
+  },
+  "icon": "images/idris-logo.png",
+  "engines": {
+    "vscode": "^1.66.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "idris2"
+  ],
+  "activationEvents": [
+    "onLanguage:idris2",
+    "onLanguage:lidr",
+    "workspaceContains:**/.ipkg"
+  ],
+  "main": "./build/exec/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "idris2",
+        "aliases": [
+          "Idris 2",
+          "idris2",
+          "idris"
+        ],
+        "extensions": [
+          ".idr"
+        ],
+        "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "ipkg",
+        "aliases": [
+          "ipkg"
+        ],
+        "extensions": [
+          ".ipkg"
+        ]
+      },
+      {
+        "id": "lidr",
+        "aliases": [
+          "Literate Idris",
+          "lidr"
+        ],
+        "configuration": "./language-configuration.json",
+        "extensions": [
+          ".lidr"
+        ]
+      }
+    ],
+    "grammars": [
+      {
+        "language": "idris2",
+        "scopeName": "source.idris2",
+        "path": "./syntaxes/idris2.tmLanguage.json"
+      },
+      {
+        "language": "ipkg",
+        "scopeName": "source.ipkg",
+        "path": "./syntaxes/ipkg.tmLanguage.json"
+      },
+      {
+        "language": "lidr",
+        "scopeName": "source.idris.literate",
+        "path": "./syntaxes/lidr.tmLanguage.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "idris2.lsp.repl",
+        "title": "Idris 2: REPL"
+      },
+      {
+        "command": "idris2.lsp.debug",
+        "title": "Idris 2: Run LSP command (DEBUG)"
+      },
+      {
+        "command": "idris2.restartLanguageServer",
+        "title": "Idris 2: Restart Language Server (LSP)"
+      }
+    ],
+    "semanticTokenTypes": [
+      {
+        "id": "module",
+        "superType": "namespace",
+        "description": "Modules"
+      },
+      {
+        "id": "postulate",
+        "superType": "type",
+        "description": "Postulate"
+      }
+    ],
+    "configuration": [
+      {
+        "title": "Idris 2",
+        "properties": {
+          "idris2.languageServer.saveOnQuickFix": {
+            "order": 1,
+            "type": "boolean",
+            "default": false,
+            "description": "Automatically save current file when a quick fix (code action) is performed",
+            "scope": "resource"
+          },
+          "idris2.serverRestartService.toggle": {
+            "order": 2,
+            "type": "boolean",
+            "default": false,
+            "description": "Periodically restart the language server",
+            "scope": "resource"
+          },
+          "idris2.serverRestartService.interval": {
+            "order": 3,
+            "type": "integer",
+            "default": 10,
+            "description": "Interval in minutes to automatically restart the language server",
+            "scope": "resource"
+          },
+          "idris2.languageServer.path": {
+            "order": 4,
+            "type": "string",
+            "default": "idris2-lsp",
+            "description": "Location of Idris 2 LSP",
+            "scope": "resource"
+          }
+        }
+      }
+    ]
+  },
+  "dependencies": {
+    "vscode-languageclient": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.31",
+    "@types/vscode": "^1.66.0",
+    "esbuild": "^0.14.38",
+    "typescript": "^4.6.4",
+    "vsce": "^2.7.0"
+  },
+  "scripts": {
+    "vscode:prepublish": "npm install && npm run compile",
+    "compile": "npx tsc -b",
+    "watch": "npx tsc -b -w",
+    "bundle": "npx esbuild ./build/exec/extension.js --bundle --minify --allow-overwrite --outfile=build/exec/extension.js --external:vscode --format=cjs --platform=node"
+  }
+}
