@@ -1,0 +1,436 @@
+{
+  "name": "Idris 2",
+  "scopeName": "source.idris2",
+  "fileTypes": ["idr"],
+  "patterns": [
+    {
+      "name": "keyword.control.idris2",
+      "match": "\\b(if|then|else|do|let|in|dsl)\\b"
+    },
+    {
+      "name": "storage.declaration.idris2",
+      "match": "\\b(impossible|case|of|total|partial|mutual|infix|infixl|infixr|constructor)\\b"
+    },
+    {
+      "name": "keyword.control.idris2",
+      "match": "\\b(where|with|syntax|proof|postulate|using|namespace|rewrite)\\b"
+    },
+    {
+      "name": "storage.visibility.idris2",
+      "match": "\\b(public|private|export|implicit)\\b"
+    },
+    {
+      "name": "comment.line.idris2",
+      "match": "(--).*$\n?",
+      "comment": "Line comment"
+    },
+    {
+      "name": "comment.documentation.line.idris2",
+      "match": "(\\|\\|\\|).*$\n?",
+      "comment": "Line comment"
+    },
+    { "include": "#multiline_comment" },
+    {
+      "begin": "\\b(module)\\b",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.idris2"
+        }
+      },
+      "end": "($|;|(?=--))",
+      "name": "meta.module.idris2",
+      "patterns": [
+        {
+          "match": "([a-zA-Z0-9._']+)",
+          "name": "meta.declaration.module.idris2"
+        }
+      ]
+    },
+    {
+      "begin": "\\b(import\\s+public|import)\\b",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.other.idris2"
+        }
+      },
+      "end": "($|;|(?=--))",
+      "name": "meta.import.idris2",
+      "patterns": [
+        {
+          "match": "([a-zA-Z0-9._']+)",
+          "name": "support.other.module.idris2"
+        }
+      ]
+    },
+    { "include": "#param_decl" },
+    { "include": "#data_decl" },
+    { "include": "#function_signature" },
+    { "include": "#ty_expression" }
+  ],
+  "repository": {
+    "multiline_comment": {
+      "name": "comment.block.idris2",
+      "begin": "\\{-",
+      "end": "-\\}",
+      "comment": "Block comment",
+      "patterns": [
+        {
+          "include": "#multiline_comment",
+          "name": "comment.block.idris2"
+        }
+      ]
+    },
+    "param_decl": {
+      "name": "meta.declaration.data.idris2",
+      "begin": "\\b(parameters)\\s+(\\()",
+      "end": "(\\))$",
+      "beginCaptures": {
+        "1": { "name": "keyword.other.idris2" },
+        "2": { "name": "punctuation.context.begin.idris2" }
+      },
+      "endCaptures": { "1": { "name": "punctuation.context.end.idris2" } },
+      "patterns": [{ "include": "#ty_expression" }]
+    },
+    "context_signature": {
+      "patterns": [
+        {
+          "name": "meta.context-signature.idris2",
+          "comment": "For things like '(Eq a, Show b) =>'\nIt begins with '(' either followed by ') =>' on the same line,\nor anything but ')' until the end of line.",
+          "begin": "(\\()((?=.*\\)\\s*=>)|(?=[^)]*$))",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.context.begin.idris2"
+            }
+          },
+          "end": "(\\))\\s*(=>)",
+          "endCaptures": {
+            "1": {
+              "name": "punctuation.context.end.idris2"
+            },
+            "2": {
+              "name": "keyword.operator.double-arrow.idris2"
+            }
+          },
+          "patterns": [{ "include": "#ty_expression" }]
+        }
+      ]
+    },
+    "parameter_type": {
+      "comment": "Parameter types in a type signature",
+      "patterns": [
+        {
+          "name": "meta.parameter.named.idris2",
+          "comment": "(x : Nat)",
+          "begin": "(\\()([\\w']+)\\s*(:)(?!:)",
+          "beginCaptures": {
+            "1": { "name": "punctuation.delimiter.idris2" },
+            "2": { "name": "variable.parameter.idris2" },
+            "3": { "name": "keyword.operator.annot.idris2" }
+          },
+          "end": "\\)",
+          "endCaptures": {
+            "0": { "name": "punctuation.delimiter.idris2" }
+          },
+          "patterns": [{ "include": "#ty_expression" }]
+        },
+        {
+          "name": "meta.parameter.implicit.idris2",
+          "comment": "{auto p : a = b}",
+          "begin": "(\\{)((auto|default .+)\\s+)?([\\w']+)\\s*(:)(?!:)",
+          "beginCaptures": {
+            "1": { "name": "punctuation.delimiter.idris2" },
+            "2": { "name": "storage.modifier.idris2" },
+            "4": { "name": "variable.parameter.idris2" },
+            "5": { "name": "keyword.operator.annot.idris2" }
+          },
+          "end": "\\}",
+          "endCaptures": {
+            "0": { "name": "punctuation.delimiter.idris2" }
+          },
+          "patterns": [{ "include": "#ty_expression" }]
+        }
+      ]
+    },
+    "ty_expression": {
+      "patterns": [
+        { "name": "keyword.operator.arrow.idris2", "match": "->" },
+        { "include": "#parameter_type" },
+        { "include": "#language_const" },
+        { "include": "#operator" },
+        { "include": "#quasiquote_paren" },
+        { "include": "#quasiquote_double_bracket" },
+        { "include": "#quasiquote_bracket" },
+        { "include": "#quasiquote_square_bracket" },
+        { "include": "#infix_function" },
+        { "include": "#prelude_type" },
+        { "include": "#delimiter" },
+        { "include": "#number_nat" },
+        { "include": "#number_integer" },
+        { "include": "#number_float" },
+        { "include": "#unit" },
+        { "include": "#string_double" },
+        { "include": "#string_single" },
+        { "include": "#data_ctor" }
+      ]
+    },
+    "function_signature": {
+      "name": "meta.function.type-signature.idris2",
+      "begin": "(([\\w']+)|\\(([|!%$+\\-.,=</>:]+)\\))\\s*(:)(?!:)",
+      "beginCaptures": {
+        "2": {
+          "name": "entity.name.function.idris2"
+        },
+        "3": {
+          "name": "entity.name.function.idris2"
+        },
+        "4": {
+          "name": "keyword.operator.colon.idris2"
+        }
+      },
+      "end": "(?!->)",
+      "patterns": [
+        { "include": "#context_signature" },
+        { "include": "#ty_expression" }
+      ],
+      "comment": "The end patterm is a bit tricky. It's either ';' or something, at the end of the line,\nbut not '->', because a type signature can be multiline. Though, it doesn't help, if you\nbreak the signature before arrows."
+    },
+    "language_const": {
+      "patterns": [
+        {
+          "name": "constant.language.unit.idris2",
+          "match": "\\(\\)"
+        },
+        {
+          "name": "constant.language.bottom.idris2",
+          "match": "_\\|_"
+        },
+        {
+          "name": "constant.language.underscore.idris2",
+          "match": "\\b_\\b"
+        }
+      ]
+    },
+    "escape_characters": {
+      "patterns": [
+        {
+          "name": "constant.character.escape.ascii.idris2",
+          "match": "\\\\(NUL|SOH|STX|ETX|EOT|ENQ|ACK|BEL|BS|HT|LF|VT|FF|CR|SO|SI|DLE|DC1|DC2|DC3|DC4|NAK|SYN|ETB|CAN|EM|SUB|ESC|FS|GS|RS|US|SP|DEL|[abfnrtv\\\\\\\"'\\&])"
+        },
+        {
+          "name": "constant.character.escape.octal.idris2",
+          "match": "\\\\o[0-7]+|\\\\x[0-9A-Fa-f]+|\\\\[0-9]+"
+        },
+        {
+          "name": "constant.character.escape.control.idris2",
+          "match": "\\^[A-Z@\\[\\]\\\\\\^_]"
+        }
+      ]
+    },
+    "data_decl": {
+      "name": "meta.declaration.data.idris2",
+      "begin": "\\b(data|codata|class|instance|interface|implementation|record)\\s",
+      "beginCaptures": {
+        "1": { "name": "keyword.other.idris2" }
+      },
+      "end": "\\b(where)\\b|(=)|$",
+      "endCaptures": {
+        "1": { "name": "keyword.other.idris2" },
+        "2": { "name": "keyword.operator.idris2" }
+      },
+      "patterns": [{ "include": "#ty_expression" }]
+    },
+    "data_ctor": {
+      "patterns": [
+        {
+          "name": "entity.name.function.ctor.idris2",
+          "match": "\\b[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}']*(?:\\.[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}']*)*\\b"
+        }
+      ]
+    },
+    "prelude_type": {
+      "name": "support.type.builtin.idris2",
+      "match": "\\b(Type|Int|Nat|Integer|Float|Char|String|Ptr|Bits8|Bits16|Bits32|Bits64|Bool)\\b"
+    },
+    "operator": {
+      "name": "keyword.operator.idris2",
+      "match": "\\?[-!#\\$%&\\*\\+\\.\\/<=>@\\\\^|~:]+|[-!#\\$%&\\*\\+\\.\\/<=>@\\\\^|~:\\?][-!#\\$%&\\*\\+\\.\\/<=>@\\\\^|~:]*"
+    },
+    "quasiquote_bracket": {
+      "name": "meta.quasiquote.idris2",
+      "begin": "`{",
+      "beginCaptures": {
+        "0": {
+          "name": "keyword.operator.quasiquote.idris2"
+        }
+      },
+      "end": "}",
+      "endCaptures": {
+        "0": {
+          "name": "keyword.operator.quasiquote.idris2"
+        }
+      },
+      "patterns": [
+        {
+          "name": "keyword.operator.arrow.idris2",
+          "match": "->"
+        },
+        { "include": "#parameter_type" },
+        { "include": "#ty_expression" }
+      ]
+    },
+    "quasiquote_paren": {
+      "name": "meta.quasiquote.idris2",
+      "begin": "`\\(",
+      "beginCaptures": {
+        "0": {
+          "name": "keyword.operator.quasiquote.idris2"
+        }
+      },
+      "end": "\\)",
+      "endCaptures": {
+        "0": {
+          "name": "keyword.operator.quasiquote.idris2"
+        }
+      },
+      "patterns": [
+        {
+          "name": "keyword.operator.arrow.idris2",
+          "match": "->"
+        },
+        { "include": "#parameter_type" },
+        { "include": "#ty_expression" }
+      ]
+    },
+    "quasiquote_double_bracket": {
+      "name": "meta.quasiquote.idris2",
+      "begin": "`{{",
+      "beginCaptures": {
+        "0": {
+          "name": "keyword.operator.quasiquote.idris2"
+        }
+      },
+      "end": "}}",
+      "endCaptures": {
+        "0": {
+          "name": "keyword.operator.quasiquote.idris2"
+        }
+      },
+      "patterns": [
+        {
+          "name": "keyword.operator.arrow.idris2",
+          "match": "->"
+        },
+        { "include": "#parameter_type" },
+        { "include": "#ty_expression" }
+      ]
+    },
+    "quasiquote_square_bracket": {
+      "name": "meta.quasiquote.idris2",
+      "begin": "`\\[",
+      "beginCaptures": {
+        "0": {
+          "name": "keyword.operator.quasiquote.idris2"
+        }
+      },
+      "end": "\\]",
+      "endCaptures": {
+        "0": {
+          "name": "keyword.operator.quasiquote.idris2"
+        }
+      },
+      "patterns": [
+        {
+          "name": "keyword.operator.arrow.idris2",
+          "match": "->"
+        },
+        { "include": "#parameter_type" },
+        { "include": "#ty_expression" }
+      ]
+    },
+    "infix_function": {
+      "name": "keyword.operator.function.infix.idris2",
+      "begin": "`",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.entity.idris2"
+        }
+      },
+      "end": "`",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.entity.idris2"
+        }
+      }
+    },
+    "delimiter": {
+      "name": "punctuation.delimiter.idris2",
+      "match": "[\\(\\)\\[\\]{},;]"
+    },
+    "unit": {
+      "match": "\\(\\)",
+      "name": "constant.unit.idris2"
+    },
+    "number_nat": {
+      "name": "constant.numeric.idris2",
+      "match": "\\b(S|Z)\\b"
+    },
+    "number_integer": {
+      "match": "\\b([0-9]+|0([xX][0-9a-fA-F]+|[oO][0-7]+))\\b",
+      "name": "constant.numeric.idris2",
+      "comment": "integer literal"
+    },
+    "number_float": {
+      "match": "\\b([0-9]+\\.[0-9]+([eE][+-]?[0-9]+)?|[0-9]+[eE][+-]?[0-9]+)\\b",
+      "name": "constant.numeric.float.idris2",
+      "comment": "float literal"
+    },
+    "string_double": {
+      "name": "string.quoted.double.idris2",
+      "begin": "\"",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.string.begin.idris2"
+        }
+      },
+      "end": "\"",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.string.end.idris2"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#escape_characters"
+        }
+      ]
+    },
+    "string_single": {
+      "name": "string.quoted.single.idris2",
+      "match": "(')(?:(?:\\\\\")|(?:\\\\[0-9]+)|(\\\\o[0-7]+)|(\\\\x[0-9a-fA-F]+)|(?:[^'])|(NUL|SOH|STX|ETX|EOT|ENQ|ACK|BEL|BS|HT|LF|VT|FF|CR|SO|SI|DLE|DC1|DC2|DC3|DC4|NAK|SYN|ETB|CAN|EM|SUB|ESC|FS|GS|RS|US|SP|DEL))(')",
+      "captures": {
+        "1": {
+          "name": "punctuation.definition.string.begin.idris2"
+        },
+        "2": {
+          "name": "constant.character.escape.octal.idris2"
+        },
+        "3": {
+          "name": "constant.character.escape.hexadecimal.idris2"
+        },
+        "4": {
+          "name": "constant.character.escape.control.idris2"
+        },
+        "5": {
+          "name": "punctuation.definition.string.end.idris2"
+        }
+      },
+      "patterns": [
+        {
+          "name": "invalid.illegal.idris2",
+          "match": "\\\\n"
+        }
+      ]
+    }
+  },
+  "uuid": "4dd16092-ffa5-4ba4-8075-e5da9f368a72"
+}

@@ -1,2 +1,5 @@
-*.ibc
-*.o
+node_modules/
+build
+output
+*~
+package-lock.json
