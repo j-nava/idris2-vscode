@@ -9,6 +9,7 @@ Ideas are very welcome, but please use the Discussions page for them.
 ## Features
 
 - Language client for [idris2-lsp](https://github.com/idris-community/idris2-lsp).
+- Expression evaluation on hover (expression needs to be selected first)
 
 ## Requirements
 
@@ -21,6 +22,9 @@ Ideas are very welcome, but please use the Discussions page for them.
 ## Known Issues
 
 ## Release Notes
+
+### 0.1.1
+- Added expression evaluation on hover
 
 ### 0.1.0
 - Initial release

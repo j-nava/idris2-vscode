@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import * as languageClient from 'vscode-languageclient/node';
 import { getLanguageServerSaveOnQuickFix } from './Configuration';
+import { getLanguageClient } from './GlobalState';
 
 export const middleware : languageClient.Middleware = {
   provideCodeActions: 
@@ -25,6 +26,25 @@ export const middleware : languageClient.Middleware = {
       else {
         return next(document, range, context, token);
       }
-  }
+    }
+, provideHover:
+    async ( document: vscode.TextDocument
+    , position: vscode.Position
+    , token: vscode.CancellationToken
+    , next: languageClient.ProvideHoverSignature) => {
+      const selection = vscode.window.activeTextEditor.selection;
+      const posOff = document.offsetAt(position);
+      const startOff = document.offsetAt(selection.start);
+      const endOff = document.offsetAt(selection.end);
+      const selectionText = document.getText(selection)
+      if (posOff >= startOff && posOff <= endOff && selectionText.length > 0) {
+        const client = getLanguageClient();
+        const response = await client.sendRequest("workspace/executeCommand", { command: "repl", arguments: [selectionText]});
+        return new vscode.Hover({ language: "Idris 2", value: response as string });
+      }
+      else {
+        return next(document, position, token);
+      }
+    }
 
 };

@@ -3,7 +3,7 @@
   "displayName": "Idris 2 Language Support",
   "description": "Idris 2 client for idris2-lsp",
   "author": "Jesse Nava",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/j-nava/idris2-vscode"
