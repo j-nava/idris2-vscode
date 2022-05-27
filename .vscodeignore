@@ -5,8 +5,10 @@ vsc-extension-quickstart.md
 node_modules/**
 build/**
 src/**
+doc-index/**
 *.ipkg
 tsconfig.json
 Makefile
-INSTALL.md
+BUILD.md
 !build/exec/extension.js
+!build/doc-index.json

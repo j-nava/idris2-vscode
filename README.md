@@ -2,7 +2,8 @@
 
 A very nice description will be written at some point. 
 
-See [INSTALL.md](INSTALL.md) for brief instructions on how to build and install. 
+Check the [releases page](releases/latest) for the latest version of this extension. 
+See [BUILD.md](BUILD.md) for brief instructions on how to build from source. 
 
 Ideas are very welcome, but please use the Discussions page for them. 
 

@@ -41,7 +41,7 @@ generate libdir = do
   packages <- catMaybes <$> traverse importPackage docDirs
   packagesWithDefinitions <- traverse importPackageDefinitions packages
   let json = packagesJson packagesWithDefinitions
-  _ <- writeFile "build/output.json" (show json)
+  _ <- writeFile "../build/doc-index.json" (show json)
   pure ()
 
   where

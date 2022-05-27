@@ -44,6 +44,7 @@ export function startLanguageServer(context: vscode.ExtensionContext, client: la
   context.subscriptions.push(vscode.commands.registerCommand("idris2.restartLanguageServer", commands.restartServer));
   context.subscriptions.push(vscode.commands.registerCommand("idris2.lsp.repl", commands.repl));
   context.subscriptions.push(vscode.commands.registerCommand("idris2.lsp.debug", commands.lsp));
+  context.subscriptions.push(vscode.commands.registerCommand("idris2.docs.search", commands.docsSearch));
 
 }
 

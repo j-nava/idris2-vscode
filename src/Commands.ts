@@ -82,3 +82,11 @@ export const lsp = async () => {
   }
 
 }
+
+export const docsSearch = async () => {
+  const searchArgs = await vscode.window.showInputBox({
+    placeHolder: "",
+    prompt: "Search for libraries, functions, or types",
+    value: ""
+  });
+}

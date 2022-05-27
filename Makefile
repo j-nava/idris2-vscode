@@ -16,6 +16,7 @@ run: build
 
 bundle: clean build
 	npm run bundle
+	make run -C doc-index
 	npx vsce package --out ./build/
 
 .PHONY: all build clean run bundle
