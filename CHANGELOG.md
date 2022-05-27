@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.1.2] - 2022-??
+### Added
+- Documentation search
+
 ## [0.1.1] - 2022-05-23
 ### Added
 - Expression evaluation on hover

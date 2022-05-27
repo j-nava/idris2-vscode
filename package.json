@@ -3,14 +3,14 @@
   "displayName": "Idris 2 Language Support",
   "description": "Idris 2 client for idris2-lsp",
   "author": "Jesse Nava",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/j-nava/idris2-vscode"
   },
   "icon": "images/idris-logo.png",
   "engines": {
-    "vscode": "latest"
+    "vscode": "^1.66.0"
   },
   "categories": [
     "Programming Languages"
@@ -143,19 +143,21 @@
     ]
   },
   "dependencies": {
-    "vscode-languageclient": "latest"
+    "vscode-languageclient": "^8.0.1"
   },
   "devDependencies": {
-    "@types/node": "latest",
-    "@types/vscode": "latest",
-    "esbuild": "latest",
-    "typescript": "latest",
-    "vsce": "latest"
+    "@types/node": "^17.0.35",
+    "@types/vscode": "^1.67.0",
+    "esbuild": "^0.14.39",
+    "typescript": "^4.7.2",
+    "vsce": "^2.8.0",
+    "npm-check-updates": "^13.0.3"
   },
   "scripts": {
     "vscode:prepublish": "npm install && npm run compile",
     "compile": "npx tsc -b",
     "watch": "npx tsc -b -w",
+    "bump-versions": "npx ncu -u",
     "bundle": "npx esbuild ./build/exec/extension.js --bundle --minify --allow-overwrite --outfile=build/exec/extension.js --external:vscode --format=cjs --platform=node"
   }
 }

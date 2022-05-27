@@ -24,6 +24,9 @@ Ideas are very welcome, but please use the Discussions page for them.
 
 ## Release Notes
 
+### 0.1.2
+- Added documentation search
+
 ### 0.1.1
 - Added expression evaluation on hover
 
