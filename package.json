@@ -10,7 +10,7 @@
   },
   "icon": "images/idris-logo.png",
   "engines": {
-    "vscode": "^1.66.0"
+    "vscode": "^1.67.0"
   },
   "categories": [
     "Programming Languages"
@@ -23,7 +23,7 @@
     "onLanguage:lidr",
     "workspaceContains:**/.ipkg"
   ],
-  "main": "./build/exec/extension.js",
+  "main": "./build/exec/Extension.js",
   "contributes": {
     "languages": [
       {
@@ -158,6 +158,6 @@
     "compile": "npx tsc -b",
     "watch": "npx tsc -b -w",
     "bump-versions": "npx ncu -u",
-    "bundle": "npx esbuild ./build/exec/extension.js --bundle --minify --allow-overwrite --outfile=build/exec/extension.js --external:vscode --format=cjs --platform=node"
+    "bundle": "npx esbuild ./build/exec/Extension.js --bundle --minify --allow-overwrite --outfile=build/exec/Extension.js --external:vscode --format=cjs --platform=node"
   }
 }

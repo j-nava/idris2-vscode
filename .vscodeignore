@@ -10,5 +10,5 @@ doc-index/**
 tsconfig.json
 Makefile
 BUILD.md
-!build/exec/extension.js
+!build/exec/Extension.js
 !build/doc-index.json

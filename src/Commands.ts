@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { getLanguageClient, getReplChannel } from './GlobalState';
 import * as serverRestart from './ServerRestart';
+const lib = require("./extension-lib.js");
 
 export const restartServer = async () => {
   serverRestart.restartServer();
@@ -89,4 +90,13 @@ export const docsSearch = async () => {
     prompt: "Search for libraries, functions, or types",
     value: ""
   });
+
+	vscode.window.showInformationMessage(lib.searchDocs(searchArgs));
+  const result = JSON.parse(lib.searchDocs(searchArgs));
+
+  const resultt = await vscode.window.showQuickPick(result, {
+		onDidSelectItem: item => vscode.window.showInformationMessage(`Focus ${item}`)
+	});
+
+	vscode.window.showInformationMessage(`Got: ${result}`);
 }
