@@ -1,15 +1,16 @@
 # Idris 2 Language Support for Visual Studio Code
 
-A very nice description will be written at some point. 
+This extension provides editor support for the [Language Server for Idris2](https://github.com/idris-community/idris2-lsp).
 
-See [INSTALL.md](INSTALL.md) for brief instructions on how to build and install. 
-
-Ideas are very welcome, but please use the Discussions page for them. 
+See [INSTALL.md](INSTALL.md) for brief instructions on how to build and install.  
 
 ## Features
 
-- Language client for [idris2-lsp](https://github.com/idris-community/idris2-lsp).
-- Expression evaluation on hover (expression needs to be selected first)
+- Language client for [idris2-lsp](https://github.com/idris-community/idris2-lsp)
+- Expression evaluation on hover (expression needs to be selected)
+- Code Actions (CTRL + .)
+- Integrated REPL terminal
+- Some quality of life settings (disabled by default)
 
 ## Requirements
 
@@ -22,6 +23,9 @@ Ideas are very welcome, but please use the Discussions page for them.
 ## Known Issues
 
 ## Release Notes
+
+### 0.1.2
+- Added REPL terminal
 
 ### 0.1.1
 - Added expression evaluation on hover
