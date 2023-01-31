@@ -28,25 +28,44 @@ export const restartServer = async () => {
 // }
 
 export const repl = async () => {
+  const writeEmitter = new vscode.EventEmitter<string>();
+  let line = '';
+  const pty = {
+    onDidWrite: writeEmitter.event,
+    open: () => writeEmitter.fire("Idris2 REPL\r\n"),
+    close: () => { /* noop*/ },
+    handleInput: (data: string) => {
+      if (data === "\r") { // Enter
+        const client = getLanguageClient();
+        client.sendRequest("workspace/executeCommand", { command: "repl", arguments: [line]})
+              .then((response) => {
+                writeEmitter.fire("\r\n");
+                writeEmitter.fire(response as string);
+                writeEmitter.fire("\r\n\r\n");
+                line = "";
+              });
 
-  const expression = await vscode.window.showInputBox({
-    placeHolder: "",
-    prompt: "Evaluate expression",
-    value: "" 
-  });
-
-  if(expression === "") {
-    vscode.window.showErrorMessage("No expression informed");
-  }
-  else {
-    const client = getLanguageClient();
-    client.sendRequest("workspace/executeCommand", { command: "repl", arguments: [expression]})
-          .then((response) => {
-            const replChannel = getReplChannel();
-            replChannel.appendLine(response as string);
-            replChannel.show(true);
-          });
-  }
+        line = '';
+        return;
+      }
+      if (data === "\x7f") { // Backspace
+        if (line.length === 0) {
+          return;
+        }
+        line = line.substr(0, line.length - 1);
+        // Move cursor backward
+        writeEmitter.fire("\x1b[D");
+        // Delete character
+        writeEmitter.fire("\x1b[P");
+        return;
+      }
+      line += data;
+      writeEmitter.fire(data);
+    }
+		};
+		const terminal = vscode.window.createTerminal({ name: `Idris2 REPL`, pty });
+		terminal.show();
+    writeEmitter.fire(">");
 
 }
 

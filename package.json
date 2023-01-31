@@ -3,7 +3,7 @@
   "displayName": "Idris 2 Language Support",
   "description": "Idris 2 client for idris2-lsp",
   "author": "Jesse Nava",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/j-nava/idris2-vscode"
@@ -79,7 +79,7 @@
     "commands": [
       {
         "command": "idris2.lsp.repl",
-        "title": "Idris 2: REPL"
+        "title": "Idris 2: Open REPL Terminal"
       },
       {
         "command": "idris2.lsp.debug",
