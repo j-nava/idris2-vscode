@@ -19,16 +19,13 @@ depends
 
 -- modules to install
 modules
-  = VSCode.Extension
-  , VSCode.GlobalState
-  , VSCode.LanguageClient
-  , VSCode.ServerRestart
+  = VSCode.Main
 
 -- main file (i.e. file to load at REPL)
-main = VSCode.Extension
+main = VSCode.Main
 
 -- name of executable
-executable = "extension.js"
+executable = "extension-lib.js"
 -- opts =
 sourcedir = "src"
 -- builddir =

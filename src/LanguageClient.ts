@@ -1,9 +1,9 @@
-import * as vscode from 'vscode';
-import * as languageClient from 'vscode-languageclient/node';
-import { getLanguageServerPath } from './Configuration';
-import { initGlobalState } from './GlobalState';
-import { middleware } from './Middleware';
-import * as commands from './Commands';
+import * as vscode from "vscode";
+import * as languageClient from "vscode-languageclient/node";
+import { getLanguageServerPath } from "./Configuration";
+import { initGlobalState } from "./GlobalState";
+import { middleware } from "./Middleware";
+import * as commands from "./Commands";
 
 export function mkLanguageClient() {
   const path = getLanguageServerPath();
@@ -12,17 +12,17 @@ export function mkLanguageClient() {
     options: { }
   };
   const ds = [
-    { scheme: 'file', language: 'idris' },
-    { scheme: 'file', language: 'idris2' },
-    { scheme: 'file', language: 'lidr' }
+    { scheme: "file", language: "idris" },
+    { scheme: "file", language: "idris2" },
+    { scheme: "file", language: "lidr" }
   ];
   const clientOptions: languageClient.LanguageClientOptions = {
     documentSelector: ds,
     middleware: middleware
   };
   return new languageClient.LanguageClient(
-    'idris2',
-    'Idris 2 Language Server',
+    "idris2",
+    "Idris 2 Language Server",
     serverOptions,
     clientOptions
   );

@@ -3,7 +3,8 @@ import { getServerRestartInterval, getServerRestartToggle } from "./Configuratio
 import { globalState, setLastServerRestart } from "./GlobalState";
 
 export const restartServer = async () => {
-  await globalState.languageClient.stop();
+  window.setStatusBarMessage("Restarting language server...", 2000);
+  await globalState.languageClient.stop()
   globalState.languageClient.start();
 };
 
@@ -16,7 +17,6 @@ export const startServerRestartService = () => {
     const diff: number = Date.now() - globalState.lastServerRestart;
 
     if (toggle && diff > interval) {
-      window.setStatusBarMessage("Restarting language server...", 2000);
       setLastServerRestart();
       restartServer();
     }

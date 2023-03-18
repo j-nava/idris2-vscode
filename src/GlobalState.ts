@@ -1,4 +1,4 @@
-import * as vscode from 'vscode';
+import * as vscode from "vscode";
 import * as languageClient from "vscode-languageclient/node";
 
 type GlobalState = {

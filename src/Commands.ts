@@ -1,8 +1,8 @@
-import * as vscode from 'vscode';
-import { getLanguageClient, getReplChannel } from './GlobalState';
-import * as serverRestart from './ServerRestart';
+import * as vscode from "vscode";
+import { getLanguageClient, getReplChannel } from "./GlobalState";
+import * as serverRestart from "./ServerRestart";
 
-export const restartServer = async () => {
+export const restartServer = () => {
   serverRestart.restartServer();
 };
 
@@ -29,7 +29,7 @@ export const restartServer = async () => {
 
 export const repl = async () => {
   const writeEmitter = new vscode.EventEmitter<string>();
-  let line = '';
+  let line = "";
   const pty = {
     onDidWrite: writeEmitter.event,
     open: () => writeEmitter.fire("Idris2 REPL\r\n"),
@@ -45,7 +45,7 @@ export const repl = async () => {
                 line = "";
               });
 
-        line = '';
+        line = "";
         return;
       }
       if (data === "\x7f") { // Backspace

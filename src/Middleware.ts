@@ -1,7 +1,7 @@
-import * as vscode from 'vscode';
-import * as languageClient from 'vscode-languageclient/node';
-import { getLanguageServerSaveOnQuickFix } from './Configuration';
-import { getLanguageClient } from './GlobalState';
+import * as vscode from "vscode";
+import * as languageClient from "vscode-languageclient/node";
+import { getLanguageServerSaveOnQuickFix } from "./Configuration";
+import { getLanguageClient } from "./GlobalState";
 
 export const middleware : languageClient.Middleware = {
   provideCodeActions: 
